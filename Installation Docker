@@ -1,0 +1,15 @@
+1. This command updates all already installed programs and features on the Raspberry PI. Execute it once and you are up to date with software.
+   sudo apt update && apt upgrade -y
+
+2. With this command combination, Docker is installed directly on the Raspberry PI and is ready for use after a few minutes.
+   curl -fsSL https://get.docker.com -o get-docker.sh| sudo sh get-docker.sh
+
+3. If Docker is installed, you still need to add your user "pi" to the group of Docker permissions. Simply log out and log back in for it to take effect.
+   sudo groupadd docker | sudo usermod -aG docker $USER
+
+4. Yes, these are 2 commands. First, a Docker volume for Portainer is created, and then Portainer itself is started as a container. You only need to copy 
+   the command and Portainer is ready for operation.
+   
+   docker volume create portainer_data
+
+   docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
