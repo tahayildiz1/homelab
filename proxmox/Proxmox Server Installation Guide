@@ -2,9 +2,11 @@
 2.	Create a bootable USB: Use software like Rufus or Etcher to create a bootable USB drive from the Proxmox ISO.
 3.	Boot from USB: Insert the USB drive into the server and boot from it.
 4.	Install Proxmox: Follow the on-screen instructions to install Proxmox. You'll need to select the language, time zone, and keyboard layout.
-5.	Configure networking: Once the installation is complete, you'll need to configure the networking settings. You can either use DHCP or configure a static         IP address.
+5.	Configure networking: Once the installation is complete, you'll need to configure the networking settings. You can either use DHCP or configure 
+        a static IP address.
 6.	Access the Proxmox web interface: Open a web browser and navigate to the IP address of your Proxmox server. The default login credentials are:
         Username: root
         Password: the root password you set during the installation
-7.	Create a virtual machine: From the Proxmox web interface, click on "Create VM" to create a new virtual machine. You'll need to specify the operating             system and hardware resources for the VM.
+7.	Create a virtual machine: From the Proxmox web interface, click on "Create VM" to create a new virtual machine. You'll need to specify the 
+        operating system and hardware resources for the VM.
 8.	Start the virtual machine: Once the VM is created, you can start it from the Proxmox web interface.
