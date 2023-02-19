@@ -1,0 +1,23 @@
+1. Login to the Proxmox Web Interface: Open a web browser and navigate to the IP address of your Proxmox server. 
+   Enter the username and password you set during the installation to login.
+
+2. Download an LXC container: In the Proxmox web interface, click on "Local" in the left sidebar, then select 
+   the "Content" tab. Here you will see a list of available LXC templates. Find the template you want to 
+   download and click on the "Download" button to start the download.
+
+3. Create a new container: Once the download is complete, go to "Create CT" to create a new container. In the 
+   "General" tab, select the following options:
+
+      Hostname: Enter a hostname for the container
+      Template: Select the template you just downloaded
+      Storage: Select the storage location for the container.
+      Password: Enter a password for the root user of the container.
+4. Configure resources: In the "Resources" tab, you can specify the amount of CPU, RAM, and disk space to allocate to the container. You can also set up CPU limits and disk quotas for the container.
+
+5. Configure networking: In the "Network" tab, you can specify the network configuration for the container. You can select the type of network interface, the IP address, and the gateway for the container.
+
+6. Customize container options: In the "Options" tab, you can customize various container options such as DNS settings, SSH keys, and startup behavior.
+
+7. Start the container: Once you've configured the container settings, click on "Create" to create the container. You can then start the container by right-clicking on it in the Proxmox web interface and selecting "Start".
+
+8. Login to the container: To login to the container, click on the container in the Proxmox web interface and then click on the "Console" tab. You can then login using the root user and the password you set during the container creation.
