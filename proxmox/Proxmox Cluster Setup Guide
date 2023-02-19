@@ -1,0 +1,56 @@
+1. Log in to the first Proxmox server, select Datacenter, then Cluster, and select Create Cluster.
+
+2. Give the cluster a name, then select create. The cluster will then be created and you’ll be able 
+   to join it from other Proxmox instances.
+   
+Firewall Rules – How to Set Up a Cluster in Proxmox
+
+1. On the first Proxmox server, select Datacenter, Firewall, then Add to create a new firewall rule.
+2. Create the first rule below for UDP port 5404:
+
+    Direction: In
+    Action: Accept
+    Protocol: UDP
+    Source: Proxmox Node 2’s IP Address
+    Source Port: 5404
+    Destination Port: 5404
+    Comment: Allow 5404
+
+3. Create the second rule below for UDP port 5405:
+
+    Direction: In
+    Action: Accept
+    Protocol: UDP
+    Source: Proxmox Node 2’s IP Address
+    Source Port: 5405
+    Destination Port: 5405
+    Comment: Allow 5405
+    
+4. Create the third rule below for TCP port 22.
+
+    Direction: In
+    Action: Accept
+    Protocol: TCP
+    Source: Proxmox Node 2’s IP Address
+    Source Port: 22
+    Destination Port: 22
+    Comment: Allow 22
+    
+5. Create the same three rules on the second Proxmox node, but with the correct source IP address 
+   (IP address of Proxmox node 1).
+   
+Joining a Cluster – How to Set Up a Cluster in Proxmox
+
+1. On the device you just set up the cluster with (pve-test in my example), select Join Information 
+   under Cluster.
+
+2. The join information will be displayed. You will need both, the Fingerprint and Join Information 
+    to join the cluster. Select Copy Information, then open your second Proxmox node.
+
+3. On the second Proxmox node, select Datacenter, Cluster, and Join Cluster.
+
+4. Paste in the information and the peer address and fingerprint will display. In the Password section, 
+   enter the root password of the other Proxmox server, then select Join [CLUSTER_NAME].
+  
+5. If the firewall rules are set up correctly, the cluster should join properly 
+   (though it may take a few minutes)!
