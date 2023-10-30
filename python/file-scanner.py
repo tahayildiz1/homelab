@@ -1,6 +1,6 @@
 import os
 import hashlib
-from virustotal_python import Virustotal
+import requests
 
 # Enter your VirusTotal API key here
 api_key = "YOUR_API_KEY"
@@ -14,31 +14,37 @@ def calculate_sha256(file_path):
     return sha256_hash.hexdigest()
 
 # Function to check a file using the VirusTotal API
-def check_file_virustotal(file_path, vt_client):
+def check_file_virustotal(file_path):
     file_hash = calculate_sha256(file_path)
-    response = vt_client.request_file_report(file_hash)
+    url = f"https://www.virustotal.com/vtapi/v2/file/report?apikey={api_key}&resource={file_hash}"
 
-    if response["results"]["response_code"] == 1:
-        # File is in VirusTotal database
-        if response["results"]["positives"] > 0:
-            # File is detected as malicious, delete it
-            print(f"File '{file_path}' is detected as malicious. Deleting...")
-            os.remove(file_path)
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        result = response.json()
+        
+        if result["response_code"] == 1:
+            # File is in VirusTotal database
+            if result["positives"] > 0:
+                # File is detected as malicious, delete it
+                print(f"File '{file_path}' is detected as malicious. Deleting...")
+                os.remove(file_path)
+            else:
+                # File is safe
+                print(f"File '{file_path}' is safe.")
         else:
-            # File is safe
-            print(f"File '{file_path}' is safe.")
+            print(f"File '{file_path}' is not in the VirusTotal database.")
     else:
-        print(f"File '{file_path}' is not in the VirusTotal database.")
+        print(f"Error checking file '{file_path}' with VirusTotal API.")
 
 # Function to scan the Downloads folder
 def scan_downloads_folder():
-    vt_client = Virustotal(API_KEY=api_key)
     downloads_path = os.path.expanduser("~\\Downloads")
 
     for root, dirs, files in os.walk(downloads_path):
         for file in files:
             file_path = os.path.join(root, file)
-            check_file_virustotal(file_path, vt_client)
+            check_file_virustotal(file_path)
 
 if __name__ == "__main__":
     scan_downloads_folder()
